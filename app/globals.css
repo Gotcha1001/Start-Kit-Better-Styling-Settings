@@ -1,0 +1,614 @@
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+
+/* ==========================================================================
+   SETTINGS: accent colors, rain, text size
+   Paste this at the END of app/globals.css so it wins over the old cyan /
+   fuchsia rules above it.
+   ========================================================================== */
+
+/* Every cyan-* and fuchsia-* Tailwind class now follows the chosen accent.
+   cyan    = the main accent colour
+   fuchsia = the second colour (--accent-alt): the gradient's middle stop, or
+             a lighter tint of the accent for solid colours. */
+@theme inline {
+  --color-cyan-50: color-mix(in oklab, var(--accent-500) 10%, white);
+  --color-cyan-100: color-mix(in oklab, var(--accent-500) 18%, white);
+  --color-cyan-200: color-mix(in oklab, var(--accent-300) 60%, white);
+  --color-cyan-300: var(--accent-300);
+  --color-cyan-400: var(--accent-400);
+  --color-cyan-500: var(--accent-500);
+  --color-cyan-600: var(--accent-600);
+  --color-cyan-700: var(--accent-700);
+  --color-cyan-800: color-mix(in oklab, var(--accent-700) 80%, black);
+  --color-cyan-900: color-mix(in oklab, var(--accent-700) 55%, black);
+  --color-cyan-950: color-mix(in oklab, var(--accent-500) 25%, black);
+
+  --color-fuchsia-200: color-mix(in oklab, var(--accent-alt) 45%, white);
+  --color-fuchsia-300: color-mix(in oklab, var(--accent-alt) 65%, white);
+  --color-fuchsia-400: var(--accent-alt);
+  --color-fuchsia-500: color-mix(in oklab, var(--accent-alt) 85%, black);
+  --color-fuchsia-600: color-mix(in oklab, var(--accent-alt) 70%, black);
+  --color-fuchsia-700: color-mix(in oklab, var(--accent-alt) 55%, black);
+  --color-fuchsia-900: color-mix(in oklab, var(--accent-alt) 35%, black);
+  --color-fuchsia-950: color-mix(in oklab, var(--accent-alt) 20%, black);
+}
+
+/* Accent palettes. AppearanceProvider writes data-accent="<id>" on <html>.
+   Solid accents only set --accent-300..700; gradients also set
+   --accent-from / --accent-via / --accent-to / --accent-alt. */
+:root {
+  --accent-alt: var(--accent-300);
+  --accent-from: var(--accent-400);
+  --accent-via: var(--accent-500);
+  --accent-to: var(--accent-600);
+  --accent-gradient: linear-gradient(
+    135deg,
+    var(--accent-from),
+    var(--accent-via),
+    var(--accent-to)
+  );
+}
+
+[data-accent="neon"] {
+  --accent-300: #67e8f9;
+  --accent-400: #22d3ee;
+  --accent-500: #06b6d4;
+  --accent-600: #0891b2;
+  --accent-700: #0e7490;
+  --accent-from: #22d3ee;
+  --accent-via: #e879f9;
+  --accent-to: #fbbf24;
+  --accent-alt: #e879f9;
+}
+
+[data-accent="emerald"] {
+  --accent-300: #6ee7b7;
+  --accent-400: #34d399;
+  --accent-500: #10b981;
+  --accent-600: #059669;
+  --accent-700: #047857;
+}
+
+[data-accent="cyan"] {
+  --accent-300: #67e8f9;
+  --accent-400: #22d3ee;
+  --accent-500: #06b6d4;
+  --accent-600: #0891b2;
+  --accent-700: #0e7490;
+}
+
+[data-accent="violet"] {
+  --accent-300: #c4b5fd;
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+}
+
+[data-accent="pink"] {
+  --accent-300: #f9a8d4;
+  --accent-400: #f472b6;
+  --accent-500: #ec4899;
+  --accent-600: #db2777;
+  --accent-700: #be185d;
+}
+
+[data-accent="amber"] {
+  --accent-300: #fcd34d;
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+}
+
+[data-accent="blue"] {
+  --accent-300: #93c5fd;
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+}
+
+[data-accent="sunset"] {
+  --accent-300: #fdba9f;
+  --accent-400: #fb8f6b;
+  --accent-500: #f97350;
+  --accent-600: #ea5a35;
+  --accent-700: #c2410c;
+  --accent-from: #f97316;
+  --accent-via: #ec4899;
+  --accent-to: #8b5cf6;
+  --accent-alt: #ec4899;
+}
+
+[data-accent="ocean"] {
+  --accent-300: #7dd3fc;
+  --accent-400: #38bdf8;
+  --accent-500: #0ea5e9;
+  --accent-600: #0284c7;
+  --accent-700: #0369a1;
+  --accent-from: #22d3ee;
+  --accent-via: #3b82f6;
+  --accent-to: #6366f1;
+  --accent-alt: #3b82f6;
+}
+
+[data-accent="aurora"] {
+  --accent-300: #5eead4;
+  --accent-400: #2dd4bf;
+  --accent-500: #14b8a6;
+  --accent-600: #0d9488;
+  --accent-700: #0f766e;
+  --accent-from: #34d399;
+  --accent-via: #22d3ee;
+  --accent-to: #a78bfa;
+  --accent-alt: #22d3ee;
+}
+
+[data-accent="cotton"] {
+  --accent-300: #f0abfc;
+  --accent-400: #e879f9;
+  --accent-500: #d946ef;
+  --accent-600: #c026d3;
+  --accent-700: #a21caf;
+  --accent-from: #f9a8d4;
+  --accent-via: #c4b5fd;
+  --accent-to: #93c5fd;
+  --accent-alt: #c4b5fd;
+}
+
+[data-accent="inferno"] {
+  --accent-300: #fdba74;
+  --accent-400: #fb923c;
+  --accent-500: #f97316;
+  --accent-600: #ea580c;
+  --accent-700: #c2410c;
+  --accent-from: #facc15;
+  --accent-via: #f97316;
+  --accent-to: #ef4444;
+  --accent-alt: #f97316;
+}
+
+[data-accent="forest"] {
+  --accent-300: #86efac;
+  --accent-400: #4ade80;
+  --accent-500: #22c55e;
+  --accent-600: #16a34a;
+  --accent-700: #15803d;
+  --accent-from: #a3e635;
+  --accent-via: #22c55e;
+  --accent-to: #0d9488;
+  --accent-alt: #22c55e;
+}
+
+[data-accent="galaxy"] {
+  --accent-300: #a5b4fc;
+  --accent-400: #818cf8;
+  --accent-500: #6366f1;
+  --accent-600: #4f46e5;
+  --accent-700: #4338ca;
+  --accent-from: #6366f1;
+  --accent-via: #8b5cf6;
+  --accent-to: #d946ef;
+  --accent-alt: #8b5cf6;
+}
+
+[data-accent="rosegold"] {
+  --accent-300: #f5c2b8;
+  --accent-400: #e9a397;
+  --accent-500: #d98a7b;
+  --accent-600: #c06f61;
+  --accent-700: #9f5347;
+  --accent-from: #fbd3c5;
+  --accent-via: #e8a598;
+  --accent-to: #b76e79;
+  --accent-alt: #e8a598;
+}
+
+[data-accent="synthwave"] {
+  --accent-300: #d8b4fe;
+  --accent-400: #c084fc;
+  --accent-500: #a855f7;
+  --accent-600: #9333ea;
+  --accent-700: #7e22ce;
+  --accent-from: #ff2e97;
+  --accent-via: #a855f7;
+  --accent-to: #00e5ff;
+  --accent-alt: #a855f7;
+}
+
+[data-accent="crimson"] {
+  --accent-300: #fca5a5;
+  --accent-400: #f87171;
+  --accent-500: #ef4444;
+  --accent-600: #dc2626;
+  --accent-700: #b91c1c;
+  --accent-from: #ef4444;
+  --accent-via: #be185d;
+  --accent-to: #6d28d9;
+  --accent-alt: #be185d;
+}
+
+/* ---- the cyber skin, re-pointed at the accent ---------------------------- */
+.cyber-beam {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--accent-from) 33%, transparent),
+    color-mix(in oklab, var(--accent-via) 33%, transparent),
+    color-mix(in oklab, var(--accent-to) 33%, transparent)
+  );
+}
+.cyber-beam::after {
+  filter: drop-shadow(0 0 6px var(--accent-400));
+}
+.cyber-glitch::before {
+  color: var(--accent-400);
+}
+.cyber-glitch::after {
+  color: var(--accent-alt);
+}
+@keyframes cyber-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent-400) 70%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent-400) 0%, transparent);
+  }
+}
+[data-sidebar="sidebar"] {
+  background:
+    radial-gradient(
+      400px 200px at 0% 0%,
+      color-mix(in oklab, var(--accent-from) 14%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      400px 300px at 100% 100%,
+      color-mix(in oklab, var(--accent-alt) 14%, transparent),
+      transparent 70%
+    ),
+    #05060a !important;
+  border-right: 1px solid
+    color-mix(in oklab, var(--accent-400) 35%, transparent);
+  box-shadow: 4px 0 30px -10px
+    color-mix(in oklab, var(--accent-400) 35%, transparent);
+}
+.cyber-nav:hover {
+  background: color-mix(
+    in oklab,
+    var(--accent-400) 10%,
+    transparent
+  ) !important;
+}
+.cyber-nav[data-active="true"] {
+  color: var(--accent-400);
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--accent-400) 22%, transparent),
+    transparent
+  ) !important;
+  box-shadow: inset 3px 0 0 var(--accent-400);
+  text-shadow: 0 0 10px color-mix(in oklab, var(--accent-400) 80%, transparent);
+}
+.cyber-nav[data-active="true"] svg {
+  filter: drop-shadow(0 0 5px var(--accent-400));
+}
+
+/* ---- helpers ------------------------------------------------------------ */
+.accent-gradient-bg {
+  background-image: var(--accent-gradient);
+}
+.accent-gradient-text {
+  background-image: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Put on any card: accent border + soft glow that follows the accent. */
+.accent-card {
+  border: 1px solid color-mix(in oklab, var(--accent-400) 25%, transparent);
+  box-shadow: 0 0 24px -10px
+    color-mix(in oklab, var(--accent-400) 35%, transparent);
+}
+
+/* ---- "Neon glow" switch off: kill the text glow too --------------------- */
+html[data-glow="off"] [style*="text-shadow"],
+html[data-glow="off"] .cyber-nav[data-active="true"] {
+  text-shadow: none !important;
+}
+
+/* ---- text size. Tailwind sizes are rem-based, so this scales the app ----- */
+html[data-size="small"] {
+  font-size: 14.5px;
+}
+html[data-size="default"] {
+  font-size: 16px;
+}
+html[data-size="large"] {
+  font-size: 18.5px;
+}
+
+/* ---- pure black theme (dark mode) ---------------------------------------
+   Paste at the END of globals.css so it wins over the shadcn defaults. */
+.dark {
+  --background: #000000;
+  --card: #05060a; /* same near-black as the sidebar, so cards still read against the page */
+  --popover: #05060a;
+  --sidebar: #000000;
+}
+
+html.dark,
+.dark body {
+  background-color: #000000;
+}
+
+/* ---- clickable things must look clickable (Tailwind v4 resets buttons to
+        cursor:default, so restore the pointer everywhere) ------------------ */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+select:not(:disabled),
+summary,
+label[for],
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled),
+input[type="range"]:not(:disabled) {
+  cursor: pointer;
+}
+button:disabled,
+[role="button"][aria-disabled="true"],
+select:disabled {
+  cursor: not-allowed;
+}
+
+/* Hide the scrollbar but keep scrolling (wheel / touch / keyboard) working. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   CYBERPUNK KIT: reuse these in every place (Dating, Housing, Shops, ...)
+   .cy-panel  big screen container   .cy-card  item card inside a panel
+   .cy-pill   filter / tab chip      .cy-title heading   .cy-label small caps
+   .cy-meter / .cy-meter-fill  neon progress bar
+   Everything follows the accent colour picker.
+   ========================================================================== */
+.cy-panel {
+  position: relative;
+  border: 1px solid color-mix(in oklab, var(--accent-400) 45%, transparent);
+  border-radius: 1rem;
+  background:
+    radial-gradient(
+      600px 220px at 100% 0%,
+      color-mix(in oklab, var(--accent-alt) 10%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--accent-500) 7%, #050810),
+      #03050c
+    );
+  box-shadow:
+    0 0 28px -10px color-mix(in oklab, var(--accent-400) 55%, transparent),
+    inset 0 0 40px -30px var(--accent-400);
+}
+/* neon gradient edge along the top */
+.cy-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 12px auto 12px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-gradient);
+  filter: drop-shadow(0 0 6px var(--accent-400));
+  pointer-events: none;
+}
+/* HUD corner brackets */
+.cy-panel::after,
+.cy-card::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  opacity: 0.8;
+  background:
+    linear-gradient(var(--accent-400), var(--accent-400)) top left / 14px 2px
+      no-repeat,
+    linear-gradient(var(--accent-400), var(--accent-400)) top left / 2px 14px
+      no-repeat,
+    linear-gradient(var(--accent-400), var(--accent-400)) top right / 14px 2px
+      no-repeat,
+    linear-gradient(var(--accent-400), var(--accent-400)) top right / 2px 14px
+      no-repeat,
+    linear-gradient(var(--accent-400), var(--accent-400)) bottom left / 14px 2px
+      no-repeat,
+    linear-gradient(var(--accent-400), var(--accent-400)) bottom left / 2px 14px
+      no-repeat,
+    linear-gradient(var(--accent-400), var(--accent-400)) bottom right / 14px
+      2px no-repeat,
+    linear-gradient(var(--accent-400), var(--accent-400)) bottom right / 2px
+      14px no-repeat;
+}
+.cy-card::after {
+  inset: 4px;
+  opacity: 0.35;
+  transition: opacity 0.2s;
+}
+.cy-card {
+  position: relative;
+  border: 1px solid color-mix(in oklab, var(--accent-400) 30%, transparent);
+  border-radius: 0.75rem;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in oklab, var(--accent-400) 4%, transparent) 0,
+      color-mix(in oklab, var(--accent-400) 4%, transparent) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--accent-500) 10%, #060914),
+      #04060d
+    );
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.cy-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-400);
+  box-shadow: 0 0 22px -4px
+    color-mix(in oklab, var(--accent-400) 65%, transparent);
+}
+.cy-card:hover::after {
+  opacity: 1;
+}
+.cy-title {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-300);
+  text-shadow: 0 0 12px color-mix(in oklab, var(--accent-400) 75%, transparent);
+}
+.cy-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--accent-300) 80%, transparent);
+}
+.cy-pill {
+  cursor: pointer;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--accent-400) 35%, transparent);
+  background: rgb(0 0 0 / 0.45);
+  padding: 0.35rem 0.9rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--accent-300) 85%, transparent);
+  transition: all 0.2s;
+}
+.cy-pill:hover {
+  border-color: var(--accent-400);
+  color: #fff;
+  box-shadow: 0 0 14px -2px
+    color-mix(in oklab, var(--accent-400) 70%, transparent);
+}
+.cy-pill[data-on="true"] {
+  border-color: var(--accent-300);
+  background: var(--accent-gradient);
+  color: #020617;
+  box-shadow: 0 0 16px -2px
+    color-mix(in oklab, var(--accent-400) 80%, transparent);
+}
+.cy-meter {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.08);
+}
+.cy-meter-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: var(--accent-gradient);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--accent-400) 80%, transparent);
+  transition: width 0.5s;
+}
+html[data-glow="off"] .cy-title {
+  text-shadow: none;
+}
+
+/* ---- Glitch heading (same effect as the home page). Needs data-text="<same text>" ---- */
+.cy-glitch {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+.cy-glitch::before,
+.cy-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0; /* invisible at rest, only flashes during the glitch */
+  text-shadow: none;
+  mix-blend-mode: screen;
+}
+.cy-glitch::before {
+  color: var(--accent-300);
+  animation: cy-glitch-a 5s infinite steps(1);
+}
+.cy-glitch::after {
+  color: var(--accent-alt);
+  animation: cy-glitch-b 5s infinite steps(1);
+}
+@keyframes cy-glitch-a {
+  0%,
+  90%,
+  100% {
+    opacity: 0;
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
+  }
+  91% {
+    opacity: 1;
+    transform: translate(-5px, 1px);
+    clip-path: inset(8% 0 58% 0);
+  }
+  93% {
+    opacity: 1;
+    transform: translate(4px, -1px);
+    clip-path: inset(62% 0 6% 0);
+  }
+  96% {
+    opacity: 1;
+    transform: translate(-3px, 0);
+    clip-path: inset(30% 0 42% 0);
+  }
+  98% {
+    opacity: 0;
+  }
+}
+@keyframes cy-glitch-b {
+  0%,
+  88%,
+  100% {
+    opacity: 0;
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
+  }
+  89% {
+    opacity: 1;
+    transform: translate(5px, -1px);
+    clip-path: inset(50% 0 20% 0);
+  }
+  92% {
+    opacity: 1;
+    transform: translate(-4px, 1px);
+    clip-path: inset(12% 0 64% 0);
+  }
+  95% {
+    opacity: 1;
+    transform: translate(3px, 0);
+    clip-path: inset(70% 0 10% 0);
+  }
+  97% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cy-glitch::before,
+  .cy-glitch::after {
+    animation: none;
+  }
+}
