@@ -1,6 +1,6 @@
 "use client";
 
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Show, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeToggle } from "./ThemeToggle";
@@ -17,9 +17,9 @@ export default function Navbar() {
       <div aria-hidden className="cyber-beam" />
 
       <div className="relative z-10 flex items-center gap-3">
-        <SignedIn>
+        <Show when="signed-in">
           <SidebarTrigger className="text-cyan-300 hover:bg-cyan-400/10 hover:text-cyan-200" />
-        </SignedIn>
+        </Show>
 
         <Link
           href="/"
@@ -47,7 +47,7 @@ export default function Navbar() {
 
       <div className="relative z-10 flex items-center gap-2">
         <ThemeToggle />
-        <SignedOut>
+        <Show when="signed-out">
           <Link
             href="/sign-in"
             style={{ clipPath: CUT }}
@@ -66,8 +66,8 @@ export default function Navbar() {
           >
             Sign up
           </Link>
-        </SignedOut>
-        <SignedIn>
+        </Show>
+        <Show when="signed-in">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full shadow-[0_0_14px_color-mix(in_oklab,var(--accent-alt)_60%,transparent)] ring-2 ring-fuchsia-400/70">
             <UserButton
               appearance={{
@@ -79,7 +79,7 @@ export default function Navbar() {
               }}
             />
           </div>
-        </SignedIn>
+        </Show>
       </div>
     </nav>
   );
