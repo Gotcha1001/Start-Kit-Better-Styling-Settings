@@ -69,12 +69,6 @@ export function AppSidebar() {
   const router = useRouter();
   const { isMobile, setOpenMobile } = useSidebar();
 
-  const myGames = useQuery(api.game.listMyGames, isSignedIn ? {} : "skip");
-  const saves = useQuery(api.saves.listSaves, isSignedIn ? {} : "skip");
-  const loadSave = useMutation(api.saves.loadSave);
-  const deleteSave = useMutation(api.saves.deleteSave);
-  const deleteGame = useMutation(api.game.deleteGame);
-
   if (!isSignedIn) return null;
 
   const closeOnMobile = (): void => {
@@ -138,20 +132,11 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <GroupLabel>Continue playing</GroupLabel>
           <SidebarMenu></SidebarMenu>
         </SidebarGroup>
 
         <SidebarGroup>
-          <GroupLabel>Saved games</GroupLabel>
-          <SidebarMenu>
-            {saves === undefined && <EmptyNote>Loading…</EmptyNote>}
-            {saves !== undefined && saves.length === 0 && (
-              <EmptyNote>
-                Nothing saved yet — use “Save” while playing.
-              </EmptyNote>
-            )}
-          </SidebarMenu>
+          <SidebarMenu></SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
 
