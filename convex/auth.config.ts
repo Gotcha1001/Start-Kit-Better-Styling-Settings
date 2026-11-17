@@ -2,7 +2,7 @@
 const authConfig = {
   providers: [
     {
-      domain: "https://factual-midge-13.clerk.accounts.dev",
+      domain: "https://possible-werewolf-8179.clerk.accounts.dev",
       applicationID: "convex", // ← must be "convex", not a dynamic env var
     },
   ],
